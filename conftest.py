@@ -1,8 +1,14 @@
 import pytest
+import os
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
+
+# Set dummy environment variables for testing before importing app components
+os.environ["SECRET_KEY"] = "super-secret-test-key"
+os.environ["ALGORITHM"] = "HS256"
+os.environ["DATABASE_URL"] = "sqlite:///./test.db" # This will be overridden by StaticPool anyway
 
 from backend.dependencies import get_db
 from backend.database import Base
