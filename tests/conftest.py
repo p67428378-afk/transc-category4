@@ -6,19 +6,9 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
-import os
-import sys
 
-# Add the project root to sys.path to resolve absolute imports
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-# Set dummy environment variables for testing before importing app components
-os.environ["SECRET_KEY"] = "super-secret-test-key"
-os.environ["ALGORITHM"] = "HS256"
-os.environ["DATABASE_URL"] = "sqlite:///./test.db" # This will be overridden by StaticPool anyway
-
-from backend.dependencies import get_db
-from backend.database import Base
+# Manual Fixes:
+from backend.database import Base, get_db
 from backend.main import app
 
 # Single engine for ALL test fixtures — StaticPool ensures one shared connection
